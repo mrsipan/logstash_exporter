@@ -1,5 +1,5 @@
 # See: https://hub.docker.com/_/golang/
-FROM golang:latest as golang
+FROM golang:1.12.14-buster as golang
 
 # Fetch the source
 RUN go get -u github.com/sequra/logstash_exporter
@@ -10,7 +10,7 @@ RUN cd $GOPATH/src/github.com/sequra/logstash_exporter && \
 
 # It looks like the `latest` tag uses uclibc
 # See: https://hub.docker.com/_/busybox/
-FROM busybox:latest 
+FROM busybox:latest
 COPY --from=golang /go/src/github.com/sequra/logstash_exporter/logstash_exporter /
 LABEL maintainer devops@sequra.es
 EXPOSE 9198
